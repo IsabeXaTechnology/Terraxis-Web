@@ -569,7 +569,12 @@
   /* ---------- interactive Mexico map ---------- */
   (function(){
     var MX = window.__MX; var holder = document.getElementById('mapholder');
-    if(!MX || !holder){ return; }
+    if(!holder){ return; }
+    if(!MX){ /* respaldo: si data/mx.js no cargó, muestra imagen en vez de un hueco */
+      holder.innerHTML = '<img src="img/hero.jpg" alt="Territorio TERRAXIS" style="width:100%;border-radius:12px;display:block">';
+      var tt=document.getElementById('telemTxt'); if(tt) tt.textContent='Inteligencia sobre el territorio';
+      return;
+    }
     var svgns='http://www.w3.org/2000/svg';
     var svg=document.createElementNS(svgns,'svg');
     svg.setAttribute('viewBox','0 0 '+MX.W+' '+MX.H);
