@@ -1,234 +1,255 @@
 <!doctype html>
 <!--
-  ┌────────────────────────────────────────────────────────────────────┐
-  │ TERRAXIS Electoral — sitio one-page (flyover 3D + scroll)           │
-  │ NO abrir con doble clic. Sírvelo por HTTP:                          │
-  │   cd 04_WEB && python3 -m http.server 8765                          │
-  │   → http://localhost:8765/                                          │
-  └────────────────────────────────────────────────────────────────────┘
+  TERRAXIS · Inteligencia Territorial y Electoral — sitio v2
+  NO abrir con doble clic. Sírvelo por HTTP:
+    cd 04_WEB && python3 -m http.server 8765  →  http://localhost:8765/
 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<title>TERRAXIS Electoral</title>
-<meta name="description" content="Inteligencia territorial, electoral y de operación sobre el territorio. Convertimos información pública en decisiones que ganan campañas.">
-
+<title>TERRAXIS · Inteligencia Territorial y Electoral</title>
+<meta name="description" content="TERRAXIS convierte información pública en inteligencia accionable —mapas, modelos y salas de mando— para gobiernos, instituciones y campañas. Control total. Inteligencia real.">
 <link rel="canonical" href="https://www.terraxiselectoral.com/">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.terraxiselectoral.com/">
-<meta property="og:title" content="TERRAXIS Electoral — Inteligencia para ganar">
-<meta property="og:description" content="Mapas, modelos y salas de mando para quien compite por un cargo. Software, ley y estrategia en un solo equipo.">
+<meta property="og:title" content="TERRAXIS · Inteligencia Territorial y Electoral">
+<meta property="og:description" content="Inteligencia territorial para decidir con certeza. GovTech no partidista: gobierno, electoral y consultoría en una sola plataforma.">
 <meta property="og:image" content="https://www.terraxiselectoral.com/img/hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
-
 <link rel="icon" href="img/iso.png">
-<!-- Fuentes self-hosted (100% sin CDN) -->
 <link rel="stylesheet" href="vendor/fonts.css">
 
 <style>
   :root{
-    --bg:#061318;
-    --bg-2:#081c22;
-    --panel:#0b2129;
-    --panel-2:#0e2831;
-    --teal:#00BFA6;
-    --teal-bright:#2fe6cf;
-    --teal-deep:#007C72;
-    --ink:#eaf5f3;
-    --muted:#8aa6a5;
-    --muted-2:#5f807f;
-    --line:rgba(255,255,255,.09);
-    --line-strong:rgba(0,191,166,.35);
-    --maxw:1200px;
+    --bg:#04120f; --bg-soft:#071923; --panel:#0b1f24; --panel-2:#0f2a31;
+    --teal:#00BFA6; --teal-bright:#34e6cf; --deep:#007C72;
+    --ink:#eef6f4; --muted:#93aead; --muted-2:#617f7d;
+    --line:rgba(255,255,255,.08); --line-teal:rgba(0,191,166,.30);
+    --warn:#d8b24a; --no:#5f807e;
+    --maxw:1180px;
     --f-display:"Space Grotesk", ui-sans-serif, system-ui, sans-serif;
     --f-body:"Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
     --f-mono:"JetBrains Mono", ui-monospace, monospace;
   }
-
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{overscroll-behavior:none;scroll-behavior:auto;background:var(--bg);color:var(--ink)}
-  body{font-family:var(--f-body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
+  body{font-family:var(--f-body);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   html.lenis,html.lenis body{height:auto}
-  .lenis.lenis-smooth{scroll-behavior:auto !important}
-  .lenis.lenis-stopped{overflow:hidden}
-
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
-  ::selection{background:rgba(0,191,166,.28)}
-
-  /* ---------- WebGL canvas ---------- */
-  #webgl{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-  body.no-webgl #webgl{display:none}
-  body.no-webgl #hero{background:#061318 url('img/hero.jpg') center/cover no-repeat}
-  body.no-webgl #hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,19,24,.55),rgba(6,19,24,.82))}
-
-  /* ---------- shared ---------- */
+  ::selection{background:rgba(0,191,166,.30)}
   .wrap{max-width:var(--maxw);margin-inline:auto;width:100%}
+
+  /* ---------- typography / shared ---------- */
   .eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:.6rem}
   .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal);opacity:.7}
-  h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.02;letter-spacing:-.02em;text-wrap:balance}
-  .sec-title{font-size:clamp(1.9rem,4.4vw,3.3rem);margin:.7rem 0 1rem}
-  .lead{color:var(--muted);font-size:clamp(1rem,1.4vw,1.18rem);max-width:60ch}
+  h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.03;letter-spacing:-.02em;text-wrap:balance}
+  .sec-title{font-size:clamp(1.9rem,4.2vw,3.1rem);margin:.7rem 0 1rem}
+  .lead{color:var(--muted);font-size:clamp(1rem,1.35vw,1.16rem);max-width:62ch}
   .accent{color:var(--teal)}
-
   section{position:relative;z-index:1}
-  .band{background:var(--bg);padding:clamp(4rem,9vw,7.5rem) clamp(1.1rem,5vw,3rem)}
-  .band.alt{background:linear-gradient(180deg,var(--bg),var(--bg-2))}
-  .band.deep{background:var(--bg-2)}
+  .band{padding:clamp(4rem,8vw,7rem) clamp(1.1rem,5vw,3rem);position:relative}
+  .band.alt{background:linear-gradient(180deg,var(--bg),var(--bg-soft))}
+  .band.deep{background:var(--bg-soft)}
+  .band + .band{border-top:1px solid var(--line)}
+  .kick{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
 
   /* ---------- nav ---------- */
-  header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-    padding:1rem clamp(1.1rem,5vw,3rem);transition:background .4s ease,backdrop-filter .4s ease,border-color .4s ease;border-bottom:1px solid transparent}
-  header.nav.scrolled{background:rgba(6,19,24,.72);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+  header.nav{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:.9rem clamp(1.1rem,5vw,3rem);transition:background .35s,backdrop-filter .35s,border-color .35s;border-bottom:1px solid transparent}
+  header.nav.scrolled{background:rgba(4,18,15,.8);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
   .brand{display:flex;align-items:center;gap:.6rem}
   .brand img{height:30px;width:auto}
-  .nav-links{display:flex;align-items:center;gap:2rem;font-size:.9rem;color:var(--muted)}
-  .nav-links a{transition:color .2s}
+  .nav-links{display:flex;align-items:center;gap:1.6rem;font-size:.9rem;color:var(--muted)}
+  .nav-links a{transition:color .2s;position:relative}
   .nav-links a:hover{color:var(--ink)}
-  .nav-cta{font-family:var(--f-body);font-weight:600;font-size:.86rem;color:#04120f;background:var(--teal);
-    padding:.6rem 1.15rem;border-radius:999px;transition:transform .2s,box-shadow .2s}
+  .nav-cta{font-weight:600;font-size:.85rem;color:#04120f;background:var(--teal);padding:.58rem 1.1rem;border-radius:999px;transition:transform .2s,box-shadow .2s}
   .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,191,166,.35)}
-  .nav-toggle{display:none;background:none;border:0;color:var(--ink);cursor:pointer;font-size:1.5rem}
-  @media(max-width:860px){.nav-links{display:none}.nav-toggle{display:block}.nav-cta{display:none}}
+  .nav-right{display:flex;align-items:center;gap:1rem}
+  .nav-toggle{display:none;background:none;border:0;color:var(--ink);cursor:pointer;font-size:1.6rem;line-height:1}
+  @media(max-width:960px){
+    .nav-links{position:fixed;inset:0;flex-direction:column;justify-content:center;gap:1.6rem;font-size:1.3rem;
+      background:rgba(4,18,15,.97);backdrop-filter:blur(16px);transform:translateY(-100%);transition:transform .4s ease;z-index:59}
+    .nav-links.open{transform:none}
+    .nav-links a{color:var(--ink)}
+    .nav-toggle{display:block;z-index:61}
+    .nav-cta{display:none}
+  }
 
   /* ---------- hero ---------- */
-  #hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-    padding:7rem clamp(1.1rem,5vw,3rem) 5rem;z-index:1}
-  #hero .wrap{position:relative}
-  .hero-h1{font-size:clamp(2.8rem,8.5vw,6.6rem);letter-spacing:-.03em;line-height:.96;margin:1.1rem 0 1.3rem}
-  .hero-h1 .accent{display:block}
-  .hero-sub{color:var(--ink);opacity:.9;font-size:clamp(1.02rem,1.7vw,1.32rem);max-width:44ch;font-weight:400}
-  .hero-cta{display:flex;flex-wrap:wrap;gap:.9rem;margin:2.2rem 0 2rem}
-  .btn{font-weight:600;font-size:.98rem;padding:.9rem 1.6rem;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;cursor:pointer;border:1px solid transparent}
+  #inicio{min-height:100svh;display:flex;align-items:center;padding:7.5rem clamp(1.1rem,5vw,3rem) 3rem;position:relative;overflow:hidden}
+  #inicio::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 55% at 80% 30%, rgba(0,191,166,.14), transparent 70%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center;position:relative}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:2rem}}
+  .hero-h1{font-size:clamp(2.5rem,6vw,4.6rem);letter-spacing:-.03em;line-height:1.0;margin:1.1rem 0 1.2rem}
+  .hero-sub{color:var(--ink);opacity:.9;font-size:clamp(1.02rem,1.5vw,1.26rem);max-width:46ch;font-weight:400}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:.9rem;margin:2rem 0 1.6rem}
+  .btn{font-weight:600;font-size:.96rem;padding:.85rem 1.5rem;border-radius:999px;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s,color .2s;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:.5rem}
   .btn-primary{background:var(--teal);color:#04120f}
   .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,191,166,.4)}
-  .btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line);color:var(--ink)}
+  .btn-ghost{background:rgba(255,255,255,.03);border-color:var(--line);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
-  .chips{display:flex;flex-wrap:wrap;gap:.55rem}
-  .chip{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--muted);
-    border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem;background:rgba(255,255,255,.02)}
-  .scroll-hint{position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);font-family:var(--f-mono);
-    font-size:.68rem;letter-spacing:.2em;color:var(--muted-2);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.5rem}
-  .scroll-hint span{width:1px;height:34px;background:linear-gradient(var(--teal),transparent);animation:drop 1.8s ease-in-out infinite}
-  @keyframes drop{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.38rem .8rem;background:rgba(255,255,255,.02)}
 
-  /* ---------- problema ---------- */
-  .pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:2.6rem}
-  .pain{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem 1.3rem;position:relative;overflow:hidden}
-  .pain::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);opacity:.55}
-  .pain .pn{font-family:var(--f-mono);font-size:.72rem;color:var(--teal);letter-spacing:.1em}
-  .pain h3{font-size:1.06rem;margin:.6rem 0 .35rem;font-family:var(--f-display);letter-spacing:-.01em}
-  .pain p{font-size:.9rem;color:var(--muted)}
-  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin-top:2.6rem;font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
-  .flow b{color:var(--ink);font-weight:500}
-  .flow i{color:var(--teal);font-style:normal}
-  .flow .fstep{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.45rem .8rem}
+  /* ---------- interactive map ---------- */
+  .mapwrap{position:relative;border:1px solid var(--line);border-radius:18px;background:
+    radial-gradient(circle at 50% 30%, rgba(0,124,114,.16), transparent 70%), var(--panel);
+    padding:1rem 1rem .8rem;box-shadow:inset 0 0 90px rgba(0,191,166,.06), 0 30px 70px rgba(0,0,0,.45);overflow:hidden}
+  .mapwrap svg{width:100%;height:auto;display:block;overflow:visible}
+  .st{fill:#123039;stroke:rgba(0,191,166,.16);stroke-width:.6;transition:fill .25s,filter .25s;cursor:pointer}
+  html.js .st{opacity:0}
+  .st.hot,.st:hover{fill:#12414a}
+  .st.nl{fill:rgba(0,191,166,.22);stroke:var(--teal);stroke-width:1;filter:drop-shadow(0 0 6px rgba(0,191,166,.55))}
+  .pin{fill:var(--teal-bright);filter:drop-shadow(0 0 5px rgba(52,230,207,.9))}
+  .pin.core{fill:#fff}
+  @keyframes pp{0%,100%{opacity:.35;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+  html.js .pin{transform-box:fill-box;transform-origin:center;animation:pp 2.6s ease-in-out infinite}
+  .maptop{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.4rem;padding:.1rem .3rem}
+  .maptag{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+  .telem{font-family:var(--f-mono);font-size:.72rem;color:var(--teal-bright);display:inline-flex;align-items:center;gap:.5rem;min-height:1.1em}
+  .telem .dot{width:7px;height:7px;border-radius:50%;background:var(--teal-bright);box-shadow:0 0 8px var(--teal-bright);flex:none}
+  .maplegend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.5rem;padding:.1rem .3rem;font-family:var(--f-mono);font-size:.66rem;color:var(--muted-2)}
+  .maplegend b{color:var(--teal);font-weight:500}
+  @media(prefers-reduced-motion:reduce){html.js .pin{animation:none;opacity:.9}html.js .st{opacity:1}}
 
-  /* ---------- qué es ---------- */
-  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
-  @media(max-width:820px){.split{grid-template-columns:1fr}}
-  .frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);position:relative}
-  .frame img{width:100%;height:100%;object-fit:cover}
-  .frame::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 90px rgba(0,191,166,.12);pointer-events:none}
-  .anchor{margin-top:1.6rem;padding:1.1rem 1.3rem;border-left:2px solid var(--teal);background:rgba(0,191,166,.06);border-radius:0 10px 10px 0;font-family:var(--f-display);font-size:1.05rem}
+  /* ---------- category strip ---------- */
+  .catbar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:2.6rem}
+  @media(max-width:760px){.catbar{grid-template-columns:repeat(2,1fr)}}
+  .catcell{background:var(--panel);padding:1.3rem 1.2rem}
+  .catcell .big{font-family:var(--f-display);font-size:clamp(1.4rem,2.6vw,2rem);color:var(--teal);letter-spacing:-.02em}
+  .catcell .lbl{font-size:.84rem;color:var(--muted);margin-top:.25rem}
+  .slogan{font-family:var(--f-display);font-size:clamp(1.2rem,2.2vw,1.7rem);text-align:center;margin-top:2.4rem}
+  .slogan .accent{color:var(--teal)}
 
-  /* ---------- video muestra ---------- */
-  .videoframe{position:relative;margin-top:2.4rem;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#000;
-    box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 0 120px rgba(0,191,166,.08)}
-  .videoframe video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
-  .vbadge{position:absolute;top:1rem;left:1rem;z-index:2;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--teal);background:rgba(6,19,24,.72);border:1px solid var(--line-strong);
-    border-radius:999px;padding:.35rem .8rem;backdrop-filter:blur(6px);pointer-events:none}
+  /* ---------- flow 3 pasos ---------- */
+  .flow3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.4rem}
+  @media(max-width:760px){.flow3{grid-template-columns:1fr}}
+  .fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.5rem 1.4rem;position:relative}
+  .fcard .fn{font-family:var(--f-mono);color:var(--teal);font-size:.8rem}
+  .fcard h4{font-size:1.1rem;margin:.5rem 0 .4rem}
+  .fcard p{font-size:.9rem;color:var(--muted)}
+  .note{font-size:.8rem;color:var(--muted-2);margin-top:1.3rem;font-family:var(--f-mono);letter-spacing:.02em}
 
-  /* ---------- etapas ---------- */
-  .stage{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(1.4rem,4vw,3.2rem);align-items:center;margin-top:3rem}
-  .stage:nth-child(even){grid-template-columns:1.1fr .9fr}
+  /* ---------- quiénes somos ---------- */
+  .mv{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.4rem}
+  @media(max-width:760px){.mv{grid-template-columns:1fr}}
+  .mvcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.8rem 1.6rem;border-top:2px solid var(--teal)}
+  .mvcard h3{font-size:1.25rem;margin-bottom:.6rem}
+  .mvcard p{color:var(--muted)}
+  .values{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.4rem}
+  @media(max-width:900px){.values{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.values{grid-template-columns:1fr}}
+  .value{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem}
+  .value h4{font-size:1rem;margin-bottom:.35rem}
+  .value p{font-size:.85rem;color:var(--muted)}
+  .teams{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.4rem}
+  @media(max-width:760px){.teams{grid-template-columns:1fr}}
+  .team{background:linear-gradient(180deg,var(--panel),transparent);border:1px solid var(--line);border-radius:14px;padding:1.5rem}
+  .team h4{font-family:var(--f-display);font-size:1.1rem;margin-bottom:.4rem}
+  .team p{font-size:.88rem;color:var(--muted)}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
+  @media(max-width:640px){.metrics{grid-template-columns:1fr}}
+  .metric{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem}
+  .metric .big{font-family:var(--f-display);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--teal)}
+  .metric .lbl{font-size:.84rem;color:var(--muted);margin-top:.25rem}
+
+  /* ---------- verticals / etapas ---------- */
+  .stage{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.3rem,4vw,3rem);align-items:center;margin-top:2.8rem}
   .stage:nth-child(even) .stage-media{order:-1}
   @media(max-width:820px){.stage,.stage:nth-child(even){grid-template-columns:1fr}.stage:nth-child(even) .stage-media{order:0}}
-  .stage-tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
-  .stage h3{font-size:clamp(1.5rem,3vw,2.1rem);margin:.55rem 0 .8rem}
+  .stage-tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+  .stage h3{font-size:clamp(1.4rem,2.8vw,2rem);margin:.5rem 0 .7rem}
   .stage p{color:var(--muted);max-width:52ch}
-  .feat{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
-  .feat li{font-size:.82rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem}
+  .feat{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+  .feat li{font-size:.82rem;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.38rem .8rem}
   .feat li::before{content:"▸ ";color:var(--teal)}
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:1rem}
-  .gallery .frame{aspect-ratio:16/10}
-  .stage-media .frame{aspect-ratio:16/11}
+  .frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);position:relative;aspect-ratio:16/11}
+  .frame img{width:100%;height:100%;object-fit:cover}
+  .frame::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 90px rgba(0,191,166,.1);pointer-events:none}
 
-  /* ---------- diferenciador ---------- */
+  /* ---------- solution cards ---------- */
+  .sols{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.4rem}
+  @media(max-width:900px){.sols{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.sols{grid-template-columns:1fr}}
+  .sol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem 1.3rem;transition:border-color .25s,transform .25s,background .25s}
+  .sol:hover{border-color:var(--line-teal);transform:translateY(-3px);background:var(--panel-2)}
+  .sol .sn{font-family:var(--f-mono);font-size:.72rem;color:var(--teal)}
+  .sol h4{font-size:1.05rem;margin:.5rem 0 .4rem;font-family:var(--f-display)}
+  .sol p{font-size:.86rem;color:var(--muted)}
+
+  /* ---------- geobase highlight ---------- */
+  .geobase{margin-top:2.6rem;border:1px solid var(--line-teal);border-radius:18px;background:
+    radial-gradient(circle at 15% 20%, rgba(0,124,114,.18), transparent 60%), var(--panel);padding:clamp(1.6rem,4vw,2.6rem)}
+  .geobase .kick{margin-bottom:.6rem;display:block}
+  .geobase h3{font-size:clamp(1.4rem,2.6vw,1.9rem);margin-bottom:.7rem}
+  .geobase p{color:var(--muted);max-width:70ch}
+  .gbflow{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin-top:1.3rem;font-family:var(--f-mono);font-size:.8rem}
+  .gbflow .st2{background:rgba(0,191,166,.08);border:1px solid var(--line-teal);border-radius:8px;padding:.45rem .8rem;color:var(--ink)}
+  .gbflow i{color:var(--teal);font-style:normal}
+
+  /* ---------- diferenciador table ---------- */
   .tablewrap{overflow-x:auto;margin-top:2.4rem;border:1px solid var(--line);border-radius:16px}
-  table.diff{width:100%;border-collapse:collapse;min-width:640px;font-size:.92rem}
+  table.diff{width:100%;border-collapse:collapse;min-width:660px;font-size:.92rem}
   table.diff th,table.diff td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid var(--line)}
-  table.diff thead th{font-family:var(--f-display);font-weight:600;font-size:.95rem;background:var(--panel-2)}
+  table.diff thead th{font-family:var(--f-display);font-weight:600;background:var(--panel-2)}
   table.diff thead th.hi{color:var(--teal)}
   table.diff tbody th{font-weight:500;color:var(--ink);width:34%}
   table.diff td{text-align:center;color:var(--muted)}
   table.diff td.col-hi{background:rgba(0,191,166,.06)}
   table.diff tr:last-child td,table.diff tr:last-child th{border-bottom:0}
   .mk{font-family:var(--f-mono);font-weight:500}
-  .mk.yes{color:var(--teal-bright)}
-  .mk.par{color:#d8b24a}
-  .mk.no{color:#5f807f}
-  .legend{margin-top:1rem;font-family:var(--f-mono);font-size:.74rem;color:var(--muted-2);letter-spacing:.04em}
+  .mk.yes{color:var(--teal-bright)} .mk.par{color:var(--warn)} .mk.no{color:var(--no)}
+  .legend{margin-top:1rem;font-family:var(--f-mono);font-size:.74rem;color:var(--muted-2)}
 
-  /* ---------- equipo / cómo empezar ---------- */
-  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.4rem 0}
-  @media(max-width:640px){.metrics{grid-template-columns:1fr}}
-  .metric{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem}
-  .metric .big{font-family:var(--f-display);font-size:clamp(1.8rem,4vw,2.6rem);color:var(--teal);letter-spacing:-.02em}
-  .metric .lbl{font-size:.86rem;color:var(--muted);margin-top:.3rem}
-  .teams{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
-  @media(max-width:760px){.teams{grid-template-columns:1fr}}
-  .team{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.5rem}
-  .team h4{font-family:var(--f-display);font-size:1.1rem;margin-bottom:.5rem}
-  .team p{font-size:.88rem;color:var(--muted)}
+  /* ---------- consultoría ---------- */
+  .serv{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:2.4rem}
+  @media(max-width:900px){.serv{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.serv{grid-template-columns:1fr}}
+  .serv div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;font-size:.9rem}
+  .serv div::before{content:"→ ";color:var(--teal)}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.6rem;counter-reset:step}
   @media(max-width:760px){.steps{grid-template-columns:1fr}}
   .step{position:relative;padding:1.5rem 1.3rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--panel),transparent)}
-  .step::before{counter-increment:step;content:counter(step);font-family:var(--f-display);font-size:1.1rem;
-    display:grid;place-items:center;width:2rem;height:2rem;border-radius:999px;background:var(--teal);color:#04120f;margin-bottom:.9rem}
+  .step::before{counter-increment:step;content:counter(step);font-family:var(--f-display);font-size:1.05rem;display:grid;place-items:center;width:2rem;height:2rem;border-radius:999px;background:var(--teal);color:#04120f;margin-bottom:.9rem}
   .step h4{font-family:var(--f-display);font-size:1.05rem;margin-bottom:.35rem}
   .step p{font-size:.87rem;color:var(--muted)}
 
   /* ---------- contacto ---------- */
-  #contacto{background:linear-gradient(180deg,var(--bg-2),#04141a)}
+  #contacto{background:linear-gradient(180deg,var(--bg-soft),#04120f)}
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3.5rem)}
   @media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
   .form{display:grid;gap:.9rem}
-  .form label{font-size:.78rem;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
-  .form input,.form select,.form textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:.8rem .95rem;color:var(--ink);font-family:var(--f-body);font-size:.95rem;margin-top:.3rem}
+  .form label{font-size:.74rem;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+  .form input,.form select,.form textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:.8rem .95rem;color:var(--ink);font-family:var(--f-body);font-size:.95rem;margin-top:.3rem}
   .form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,191,166,.12)}
   .form .row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
   @media(max-width:520px){.form .row{grid-template-columns:1fr}}
-  .contact-side h2{margin-bottom:1rem}
   .contact-links{margin-top:1.6rem;display:grid;gap:.7rem;font-size:.95rem}
   .contact-links a,.contact-links span{color:var(--muted);display:flex;gap:.6rem;align-items:center}
-  .contact-links b{color:var(--teal);font-family:var(--f-mono);font-size:.78rem;letter-spacing:.06em;min-width:88px;display:inline-block}
-  .note{font-size:.78rem;color:var(--muted-2);margin-top:1.2rem}
+  .contact-links b{color:var(--teal);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;min-width:96px;display:inline-block}
+  .wa{display:inline-flex;align-items:center;gap:.5rem;background:#25d366;color:#04120f;font-weight:600;font-size:.9rem;padding:.7rem 1.2rem;border-radius:999px;margin-top:1.2rem;transition:transform .2s}
+  .wa:hover{transform:translateY(-2px)}
 
-  footer{background:#04141a;border-top:1px solid var(--line);padding:2.4rem clamp(1.1rem,5vw,3rem);
-    display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;color:var(--muted-2);font-size:.82rem}
+  footer{background:#04120f;border-top:1px solid var(--line);padding:2.4rem clamp(1.1rem,5vw,3rem);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;color:var(--muted-2);font-size:.82rem}
   footer img{height:26px;opacity:.9}
-  .footnp{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.04em}
+  .footnp{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.03em}
 
-  /* ---------- reveal ---------- */
+  /* reveal */
   .reveal{opacity:1;transform:none}
-  html.js .reveal{opacity:0;transform:translateY(26px)}
-  @media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none}.scroll-hint span{animation:none}}
+  html.js .reveal{opacity:0;transform:translateY(24px)}
+  @media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none}}
 
   /* preloader */
-  #pre{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:1.1rem;z-index:9000;transition:opacity .7s ease,visibility .7s}
+  #pre{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;z-index:9000;transition:opacity .6s,visibility .6s}
   #pre.done{opacity:0;visibility:hidden}
   #pre img{height:40px;opacity:.95}
-  .pbar{width:min(260px,54vw);height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
-  .pfill{height:100%;width:0;background:var(--teal);transition:width .25s ease}
-  .pnum{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);letter-spacing:.14em}
+  .pbar{width:min(240px,52vw);height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+  .pfill{height:100%;width:0;background:var(--teal);transition:width .25s}
 </style>
 </head>
 <body>
@@ -236,204 +257,102 @@
 <div id="pre" aria-hidden="true">
   <img src="img/logo.png" alt="TERRAXIS">
   <div class="pbar"><div class="pfill"></div></div>
-  <div class="pnum">0%</div>
 </div>
 
-<canvas id="webgl"></canvas>
-
 <header class="nav" id="nav">
-  <a class="brand" href="#hero"><img src="img/logo.png" alt="TERRAXIS Electoral"></a>
-  <nav class="nav-links">
-    <a href="#problema">El problema</a>
-    <a href="#producto">Qué es</a>
-    <a href="#video">Video</a>
-    <a href="#etapas">Las 3 etapas</a>
-    <a href="#diferenciador">Diferenciador</a>
-    <a href="#equipo">Equipo</a>
+  <a class="brand" href="#inicio"><img src="img/logo.png" alt="TERRAXIS Inteligencia Territorial y Electoral"></a>
+  <nav class="nav-links" id="menu">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Quiénes somos</a>
+    <a href="#electoral">Electoral</a>
+    <a href="#gobierno">Gobierno</a>
+    <a href="#consultoria">Consultoría</a>
+    <a href="#contacto">Contacto</a>
   </nav>
-  <a class="nav-cta" href="#contacto">Solicita tu demo</a>
-  <button class="nav-toggle" aria-label="Menú" onclick="document.getElementById('contacto').scrollIntoView()">☰</button>
+  <div class="nav-right">
+    <a class="nav-cta" href="#contacto">Solicitar demo</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
 </header>
 
 <main>
-  <!-- HERO -->
-  <section id="hero">
-    <div class="wrap">
-      <span class="eyebrow reveal">TERRAXIS Electoral · Decisión sobre el territorio</span>
-      <h1 class="hero-h1 reveal">Inteligencia<br><span class="accent">para ganar.</span></h1>
-      <p class="hero-sub reveal">Convertimos información pública en inteligencia accionable —mapas, modelos y salas de mando— para quien compite por un cargo en las elecciones de 2027.</p>
-      <div class="hero-cta reveal">
-        <a class="btn btn-primary" href="#contacto">Solicita tu demo</a>
-        <a class="btn btn-ghost" href="#producto">Ver cómo funciona</a>
-      </div>
-      <div class="chips reveal">
-        <span class="chip">Inteligencia Territorial</span>
-        <span class="chip">Inteligencia Electoral</span>
-        <span class="chip">Automatización + IA</span>
-      </div>
-    </div>
-    <div class="scroll-hint">Desliza<span></span></div>
-  </section>
-
-  <!-- PROBLEMA -->
-  <section id="problema" class="band alt">
-    <div class="wrap">
-      <span class="eyebrow reveal">El problema</span>
-      <h2 class="sec-title reveal">El costo de decidir sin ver.<br><span class="accent">Hoy se decide a ciegas.</span></h2>
-      <p class="lead reveal">TERRAXIS existe para resolver los problemas que hacen perder campañas y desgastan estructuras.</p>
-      <div class="pains">
-        <div class="pain reveal"><div class="pn">01</div><h3>Falta de estrategia</h3><p>Se compite sin leer el territorio ni la competitividad de cada sección.</p></div>
-        <div class="pain reveal"><div class="pn">02</div><h3>Opacidad en recursos</h3><p>Gastos y esfuerzo sin trazabilidad ni control en tiempo real.</p></div>
-        <div class="pain reveal"><div class="pn">03</div><h3>Desorden operativo</h3><p>Estructura dispersa, sin una sola fuente de verdad viva.</p></div>
-        <div class="pain reveal"><div class="pn">04</div><h3>Incertidumbre el día D</h3><p>La jornada electoral se enfrenta sin visibilidad ni evidencia.</p></div>
-        <div class="pain reveal"><div class="pn">05</div><h3>Procesos ineficientes</h3><p>Tareas manuales que la automatización y la IA ya resuelven.</p></div>
-      </div>
-      <div class="flow reveal">
-        <span class="fstep"><b>Datos</b></span><i>→</i>
-        <span class="fstep"><b>Visión geoespacial</b></span><i>→</i>
-        <span class="fstep"><b>IA + Automatización</b></span><i>→</i>
-        <span class="fstep"><b>Análisis</b></span><i>→</i>
-        <span class="fstep"><b>Decisión</b></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUÉ ES -->
-  <section id="producto" class="band">
-    <div class="wrap split">
+  <!-- ================= INICIO / HERO ================= -->
+  <section id="inicio">
+    <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow reveal">Qué es TERRAXIS Electoral</span>
-        <h2 class="sec-title reveal">La infraestructura de <span class="accent">inteligencia y operación</span> sobre el territorio.</h2>
-        <p class="lead reveal">Una empresa GovTech que integra —en una sola plataforma— analítica geoespacial, inteligencia electoral, automatización e IA para entender, controlar y actuar sobre cada territorio.</p>
-        <div class="anchor reveal">No es "otro software": es el eje que conecta <span class="accent">territorio, información y decisión.</span></div>
-      </div>
-      <div class="frame reveal" style="aspect-ratio:16/11"><img src="img/devices.jpg" alt="Plataforma TERRAXIS en múltiples dispositivos"></div>
-    </div>
-  </section>
-
-  <!-- VIDEO MUESTRA -->
-  <section id="video" class="band alt">
-    <div class="wrap">
-      <span class="eyebrow reveal">TERRAXIS en acción</span>
-      <h2 class="sec-title reveal">Míralo funcionando<br>sobre el <span class="accent">territorio.</span></h2>
-      <p class="lead reveal">Una muestra de cómo TERRAXIS convierte datos en decisiones —del mapa de calor al War Room del Día D.</p>
-      <div class="videoframe reveal">
-        <span class="vbadge">▶ Video muestra</span>
-        <video controls preload="none" playsinline poster="img/video_poster.jpg">
-          <source src="video/muestra.mp4" type="video/mp4">
-          Tu navegador no soporta video HTML5.
-        </video>
-      </div>
-      <p class="note reveal">Muestra preliminar. La pieza definitiva del sitio se produce próximamente.</p>
-    </div>
-  </section>
-
-  <!-- ETAPAS -->
-  <section id="etapas" class="band deep">
-    <div class="wrap">
-      <span class="eyebrow reveal">El sistema</span>
-      <h2 class="sec-title reveal">Tres etapas. Un mismo territorio<br>bajo control de <span class="accent">principio a fin.</span></h2>
-
-      <div class="stage reveal">
-        <div>
-          <div class="stage-tag">Etapa 1 · Análisis</div>
-          <h3>Conoce tu territorio antes de pisarlo.</h3>
-          <p>GIS, mapas de calor, competitividad y scoring por sección con dashboard en tiempo real. De información pública a inteligencia propia —accionable y defendible.</p>
-          <ul class="feat">
-            <li>Analítica geoespacial</li><li>Scoring por sección</li>
-            <li>Mapas de competitividad</li><li>Dashboard en vivo</li>
-          </ul>
+        <span class="eyebrow reveal">Inteligencia Territorial y Electoral</span>
+        <h1 class="hero-h1 reveal">Inteligencia territorial para <span class="accent">decidir con certeza.</span></h1>
+        <p class="hero-sub reveal">Convertimos información pública en inteligencia accionable —mapas, modelos y salas de mando— para gobiernos, instituciones y campañas. Una sola plataforma sobre el territorio.</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-primary" href="#contacto">Solicitar demostración</a>
+          <a class="btn btn-ghost" href="#electoral">Ver cómo funciona</a>
         </div>
-        <div class="stage-media"><div class="frame"><img src="img/etapa1.jpg" alt="Análisis territorial y mapas de calor"></div></div>
-      </div>
-
-      <div class="stage reveal">
-        <div>
-          <div class="stage-tag">Etapa 2 · Gestión de campaña</div>
-          <h3>Toda tu estructura, viva y bajo control.</h3>
-          <p>Geolocalización y auditoría de eventos y recursos, agenda inteligente, registro de simpatizantes, ChatBot 24/7, lectura de identificaciones con IA y comunicación con toda la estructura.</p>
-          <div class="gallery">
-            <div class="frame"><img src="img/chatbot.jpg" alt="ChatBot 24/7"></div>
-            <div class="frame"><img src="img/agenda.jpg" alt="Agenda inteligente"></div>
-            <div class="frame"><img src="img/registro.jpg" alt="Registro de simpatizantes"></div>
-            <div class="frame"><img src="img/lectura.jpg" alt="Lectura de identificaciones con IA"></div>
-          </div>
+        <div class="chips reveal">
+          <span class="chip">Inteligencia Territorial</span>
+          <span class="chip">Inteligencia Electoral</span>
+          <span class="chip">IA + Automatización</span>
         </div>
-        <div class="stage-media"><div class="frame"><img src="img/etapa2.jpg" alt="Operación territorial y brigadas"></div></div>
       </div>
-
-      <div class="stage reveal">
-        <div>
-          <div class="stage-tag">Etapa 3 · Jornada electoral</div>
-          <h3>Todo tu operativo del Día D, bajo control.</h3>
-          <p>Registro y auditoría de representantes de casilla, incidencias georreferenciadas que se vuelven escritos y denuncias con IA y un abogado electoral, movilización territorial, lectura de resultados y War Room.</p>
-          <ul class="feat">
-            <li>Representantes de casilla</li><li>Incidencias → escritos con IA</li>
-            <li>Revisión de abogado electoral</li><li>Movilización</li><li>War Room</li>
-          </ul>
-          <div class="gallery">
-            <div class="frame"><img src="img/flow.jpg" alt="De la incidencia al escrito"></div>
-            <div class="frame"><img src="img/moviliza.jpg" alt="Movilización territorial"></div>
-          </div>
+      <div class="mapwrap reveal" id="mapwrap">
+        <div class="maptop">
+          <span class="maptag">Cobertura · México</span>
+          <span class="telem" id="telem"><span class="dot"></span><span id="telemTxt">Inteligencia sobre el territorio</span></span>
         </div>
-        <div class="stage-media"><div class="frame"><img src="img/etapa3.jpg" alt="War Room y jornada electoral"></div></div>
+        <div id="mapholder"></div>
+        <div class="maplegend">
+          <span><b>●</b> Nuevo León · cabeza de playa</span>
+          <span><b>●</b> capas de inteligencia</span>
+          <span>pasa el cursor sobre un estado</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- DIFERENCIADOR -->
-  <section id="diferenciador" class="band">
+  <!-- ================= CATEGORÍA ================= -->
+  <section class="band alt" id="categoria">
     <div class="wrap">
-      <span class="eyebrow reveal">¿Por qué elegir TERRAXIS?</span>
-      <h2 class="sec-title reveal">No compites contra un software.<br>Compites con un <span class="accent">sistema completo.</span></h2>
-      <p class="lead reveal">Dónde termina una herramienta electoral común y dónde empieza TERRAXIS Electoral.</p>
-      <div class="tablewrap reveal">
-        <table class="diff">
-          <thead>
-            <tr>
-              <th>Capacidad</th>
-              <th class="hi">TERRAXIS Electoral</th>
-              <th>Sistema electoral común</th>
-              <th>Herramientas básicas</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Inteligencia territorial y electoral</th>
-              <td class="col-hi"><span class="mk yes">✓ Completo</span></td>
-              <td><span class="mk par">~ Parcial</span></td>
-              <td><span class="mk no">✕ No</span></td>
-            </tr>
-            <tr>
-              <th>Gestión de campaña (estructura, agenda, IA)</th>
-              <td class="col-hi"><span class="mk yes">✓ Completo</span></td>
-              <td><span class="mk par">~ Parcial</span></td>
-              <td><span class="mk par">~ Parcial</span></td>
-            </tr>
-            <tr>
-              <th>Jornada electoral (RCs, incidencias, War Room)</th>
-              <td class="col-hi"><span class="mk yes">✓ Completo</span></td>
-              <td><span class="mk no">✕ No</span></td>
-              <td><span class="mk no">✕ No</span></td>
-            </tr>
-            <tr>
-              <th>Consultoría integral: software + ley + estrategia</th>
-              <td class="col-hi"><span class="mk yes">✓ Completo</span></td>
-              <td><span class="mk no">✕ No</span></td>
-              <td><span class="mk no">✕ No</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <span class="eyebrow reveal">La categoría</span>
+      <h2 class="sec-title reveal">Una plataforma. Dos verticales.<br>Diez soluciones. <span class="accent">Un núcleo de datos.</span></h2>
+      <p class="lead reveal">Nadie en México ni en América Latina integra en una sola plataforma la inteligencia territorial, la electoral, la IA de decisión y la operación. TERRAXIS ocupa ese espacio.</p>
+      <div class="catbar reveal">
+        <div class="catcell"><div class="big">2</div><div class="lbl">verticales: Gobierno y Electoral</div></div>
+        <div class="catcell"><div class="big">10</div><div class="lbl">soluciones + Consultoría Política</div></div>
+        <div class="catcell"><div class="big">Dato oficial</div><div class="lbl">INEGI · INE · fuentes públicas</div></div>
+        <div class="catcell"><div class="big">No partidista</div><div class="lbl">método y evidencia, no bando</div></div>
       </div>
-      <p class="legend reveal">✓ Completo · ~ Parcial · ✕ No disponible</p>
+
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.8rem);margin-top:3rem">De la información pública a la <span class="accent">inteligencia propia</span></h3>
+      <div class="flow3">
+        <div class="fcard reveal"><div class="fn">01</div><h4>Insumos públicos</h4><p>Resultados electorales y datos geográficos abiertos de INEGI e INE (Excel, CSV, JSON, GeoJSON).</p></div>
+        <div class="fcard reveal"><div class="fn">02</div><h4>Interpretación propia</h4><p>Analítica, inteligencia artificial y automatización que procesan y modelan los datos.</p></div>
+        <div class="fcard reveal"><div class="fn">03</div><h4>Productos derivados</h4><p>Capas, mapas de calor, dashboards y modelos territoriales: activos e IP de TERRAXIS.</p></div>
+      </div>
+      <p class="note reveal">Operamos con datos agregados. Sin padrón ni lista nominal. No redistribuimos cartografía oficial.</p>
+      <p class="slogan reveal">Control total. <span class="accent">Inteligencia real.</span></p>
     </div>
   </section>
 
-  <!-- EQUIPO / CÓMO EMPEZAR -->
-  <section id="equipo" class="band alt">
+  <!-- ================= QUIÉNES SOMOS ================= -->
+  <section class="band" id="nosotros">
     <div class="wrap">
-      <span class="eyebrow reveal">Equipo · Cómo empezar</span>
-      <h2 class="sec-title reveal">Software, ley y estrategia.<br>Un solo equipo, <span class="accent">de tu lado.</span></h2>
+      <span class="eyebrow reveal">Quiénes somos</span>
+      <h2 class="sec-title reveal">Un ecosistema de inteligencia para el <span class="accent">territorio y la elección.</span></h2>
+      <p class="lead reveal">TERRAXIS es una empresa GovTech de inteligencia territorial y electoral. Existe para cerrar la distancia entre la enorme cantidad de información que producen los territorios y la calidad de las decisiones que se toman sobre ellos.</p>
+
+      <div class="mv">
+        <div class="mvcard reveal"><h3>Misión</h3><p>Ayudar a gobiernos, instituciones, campañas y organizaciones políticas a decidir mejor, con tecnología, inteligencia artificial, automatización y análisis territorial. No vendemos software: elevamos la calidad de la decisión pública y política.</p></div>
+        <div class="mvcard reveal"><h3>Visión</h3><p>Ser la principal empresa GovTech de América Latina en inteligencia territorial y electoral, automatización gubernamental e inteligencia artificial para decisiones públicas.</p></div>
+      </div>
+
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:2.8rem">Principios innegociables</h3>
+      <div class="values">
+        <div class="value reveal"><h4>No partidismo</h4><p>Aportamos método, tecnología y evidencia; no tomamos partido. Servimos a fuerzas distintas y a instituciones de cualquier signo.</p></div>
+        <div class="value reveal"><h4>Verdad sobre el dato</h4><p>Información pública, productos derivados propios, datos agregados. Sin padrón ni lista nominal.</p></div>
+        <div class="value reveal"><h4>Control e integridad</h4><p>El cliente conserva el control de sus datos; nosotros garantizamos trazabilidad, gobernanza y resguardo.</p></div>
+        <div class="value reveal"><h4>Evidencia sobre intuición</h4><p>Ninguna afirmación sin fuente; ninguna estimación sin metodología. Decidir con certeza, no con corazonada.</p></div>
+      </div>
+
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:2.8rem">Software, ley y estrategia. Un solo equipo, <span class="accent">de tu lado.</span></h3>
       <div class="metrics">
         <div class="metric reveal"><div class="big">+20</div><div class="lbl">años de experiencia combinada</div></div>
         <div class="metric reveal"><div class="big">3 en 1</div><div class="lbl">software · defensa jurídica · estrategia</div></div>
@@ -441,339 +360,306 @@
       </div>
       <div class="teams">
         <div class="team reveal"><h4>Desarrolladores de software</h4><p>La plataforma, la IA y la integración de datos, construidas y mantenidas en casa.</p></div>
-        <div class="team reveal"><h4>Abogados electorales</h4><p>Defensa jurídica del voto con abogados expertos: cada incidencia se vuelve prueba.</p></div>
+        <div class="team reveal"><h4>Abogados electorales</h4><p>Defensa jurídica del voto con expertos: cada incidencia se vuelve prueba.</p></div>
         <div class="team reveal"><h4>Consultores políticos</h4><p>Estrategia territorial que traduce la inteligencia en decisiones que ganan.</p></div>
-      </div>
-      <div class="steps">
-        <div class="step reveal"><h4>Agenda tu demo</h4><p>Te mostramos la plataforma y te entregamos un análisis electoral de tu territorio.</p></div>
-        <div class="step reveal"><h4>Diagnóstico y cotización a la medida</h4><p>Definimos alcance por etapa y armamos una propuesta ajustada a tu elección.</p></div>
-        <div class="step reveal"><h4>Piloto y despliegue</h4><p>Arrancamos con un piloto, capacitamos a tu estructura y escalamos.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO -->
-  <section id="contacto" class="band">
+  <!-- ================= TERRAXIS ELECTORAL ================= -->
+  <section class="band deep" id="electoral">
+    <div class="wrap">
+      <span class="eyebrow reveal">TERRAXIS Electoral</span>
+      <h2 class="sec-title reveal">Del análisis del territorio a la <span class="accent">defensa del voto.</span></h2>
+      <p class="lead reveal">Acompañamos el ciclo completo de una campaña —planeación, operación, jornada y representación— con inteligencia por sección y casilla que ningún actor integra en una sola plataforma.</p>
+
+      <!-- 3 etapas -->
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Etapa 1 · Análisis</div>
+          <h3>Conoce tu territorio antes de pisarlo.</h3>
+          <p>GIS, mapas de calor, competitividad y scoring por sección con dashboard en tiempo real. De información pública a inteligencia propia, accionable y defendible.</p>
+          <ul class="feat"><li>Analítica geoespacial</li><li>Scoring por sección</li><li>Mapas de competitividad</li><li>Dashboard en vivo</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/etapa1.jpg" alt="Análisis territorial y mapas de calor" loading="lazy"></div></div>
+      </div>
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Etapa 2 · Gestión de campaña</div>
+          <h3>Toda tu estructura, viva y bajo control.</h3>
+          <p>Geolocalización y auditoría de eventos y recursos, agenda inteligente, registro de simpatizantes, ChatBot 24/7, lectura de identificaciones con IA y comunicación con toda la estructura.</p>
+          <ul class="feat"><li>Brigadas en tiempo real</li><li>Agenda inteligente</li><li>Registro y lectura con IA</li><li>Fiscalización</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/etapa2.jpg" alt="Operación territorial y brigadas" loading="lazy"></div></div>
+      </div>
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Etapa 3 · Jornada electoral</div>
+          <h3>Todo tu operativo del Día D, bajo control.</h3>
+          <p>Registro y auditoría de representantes de casilla, incidencias georreferenciadas que se vuelven escritos y denuncias con IA y un abogado electoral, movilización territorial, lectura de resultados y War Room.</p>
+          <ul class="feat"><li>Representantes de casilla</li><li>Incidencias → escritos con IA</li><li>Revisión de abogado electoral</li><li>Movilización</li><li>War Room</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/etapa3.jpg" alt="War Room y jornada electoral" loading="lazy"></div></div>
+      </div>
+
+      <!-- 7 soluciones -->
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:3rem">Las soluciones de la vertical Electoral</h3>
+      <div class="sols">
+        <div class="sol reveal"><div class="sn">Sol 1</div><h4>Inteligencia Electoral y Territorial</h4><p>Historia electoral, contexto socioeconómico y predicción: scoring seccional y recomendación de estrategia.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 2</div><h4>Operación Territorial de Campaña</h4><p>Estructura de campo viva y geolocalizada, rutas, encuestas y chatbot del candidato 24/7.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 3</div><h4>Transparencia, Fiscalización y Auditoría</h4><p>Contabilidad automatizada, control de topes en vivo y auditoría independiente de lo reportado.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 4</div><h4>Día de la Elección y War Room</h4><p>Sala de mando, defensa del voto, incidencias georreferenciadas, conteo interno y movilización con IA.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 5</div><h4>Marketing Político e Inteligencia de Comunicación</h4><p>Contenido con IA, social listening por territorio y respuesta a desinformación y deepfakes.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 6</div><h4>Inteligencia Legislativa</h4><p>Observatorio territorial permanente, agenda asistida por datos y tablero de cumplimiento de promesas.</p></div>
+        <div class="sol reveal"><div class="sn">Sol 7</div><h4>TERRAXIS GeoBase</h4><p>La capa de inteligencia territorial siempre disponible —"el Bloomberg territorial"— por suscripción.</p></div>
+      </div>
+
+      <!-- diferenciador -->
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:3rem">¿Por qué elegir TERRAXIS?</h3>
+      <div class="tablewrap reveal">
+        <table class="diff">
+          <thead><tr>
+            <th>Capacidad</th><th class="hi">TERRAXIS</th><th>Sistema electoral común</th><th>Herramientas básicas</th>
+          </tr></thead>
+          <tbody>
+            <tr><th>Inteligencia territorial y electoral</th><td class="col-hi"><span class="mk yes">✓ Completo</span></td><td><span class="mk par">~ Parcial</span></td><td><span class="mk no">✕ No</span></td></tr>
+            <tr><th>Gestión de campaña (estructura, agenda, IA)</th><td class="col-hi"><span class="mk yes">✓ Completo</span></td><td><span class="mk par">~ Parcial</span></td><td><span class="mk par">~ Parcial</span></td></tr>
+            <tr><th>Jornada electoral (RCs, incidencias, War Room)</th><td class="col-hi"><span class="mk yes">✓ Completo</span></td><td><span class="mk no">✕ No</span></td><td><span class="mk no">✕ No</span></td></tr>
+            <tr><th>Consultoría integral: software + ley + estrategia</th><td class="col-hi"><span class="mk yes">✓ Completo</span></td><td><span class="mk no">✕ No</span></td><td><span class="mk no">✕ No</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="legend reveal">✓ Completo · ~ Parcial · ✕ No disponible</p>
+    </div>
+  </section>
+
+  <!-- ================= TERRAXIS GOBIERNO ================= -->
+  <section class="band" id="gobierno">
+    <div class="wrap">
+      <span class="eyebrow reveal">TERRAXIS Gobierno</span>
+      <h2 class="sec-title reveal">Gobernar con <span class="accent">evidencia territorial.</span></h2>
+      <p class="lead reveal">La misma inteligencia del territorio, al servicio de la gestión pública: atención ciudadana rastreable, una sola fuente de verdad del territorio y digitalización que libera la información atrapada en el papel —siempre bajo control institucional del cliente.</p>
+
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Solución 8</div>
+          <h3>IA y Atención Ciudadana (311 inteligente)</h3>
+          <p>Cada solicitud ciudadana se vuelve una acción rastreable y cada trámite una experiencia ágil: recepción multicanal, clasificación, geolocalización y ruteo con IA, Trámites Cero y copiloto del funcionario.</p>
+          <ul class="feat"><li>311 inteligente</li><li>Trámites Cero</li><li>Ruteo con IA</li><li>Ticket con seguimiento</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/chatbot.jpg" alt="Atención ciudadana con IA" loading="lazy"></div></div>
+      </div>
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Solución 9</div>
+          <h3>Inteligencia Territorial de Gobierno</h3>
+          <p>Analítica territorial para la decisión pública: gemelo digital municipal, centro de inteligencia, seguridad predictiva, focalización social por colonia o AGEB, e inteligencia para inversión pública, obra, recaudación y catastro.</p>
+          <ul class="feat"><li>Gemelo digital municipal</li><li>Seguridad predictiva</li><li>Focalización social</li><li>Obra pública con IA</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/etapa1.jpg" alt="Inteligencia territorial de gobierno" loading="lazy"></div></div>
+      </div>
+      <div class="stage reveal">
+        <div>
+          <div class="stage-tag">Solución 10</div>
+          <h3>Plataformas y Digitalización</h3>
+          <p>La base tecnológica del gobierno moderno: plataformas gubernamentales a la medida y digitalización con IA que convierte el papel en dato estructurado, con clasificación y automatización documental.</p>
+          <ul class="feat"><li>Plataformas a la medida</li><li>Del papel al dato</li><li>Automatización documental</li></ul>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/devices.jpg" alt="Plataformas y digitalización gubernamental" loading="lazy"></div></div>
+      </div>
+
+      <!-- GeoBase highlight -->
+      <div class="geobase reveal">
+        <span class="kick">Núcleo de datos · el foso</span>
+        <h3>TERRAXIS GeoBase</h3>
+        <p>La capa de inteligencia territorial que alimenta las diez soluciones. Ingiere fuentes públicas, genera capas derivadas propias y acumula resultados, incidencias y patrones a nivel de sección y casilla —elección tras elección—. Es el activo que un competidor no puede copiar: la analítica y la operación, no el dato en bruto.</p>
+        <div class="gbflow">
+          <span class="st2">Fuentes públicas</span><i>→</i>
+          <span class="st2">Interpretación con IA</span><i>→</i>
+          <span class="st2">Capas derivadas propias</span><i>→</i>
+          <span class="st2">Retroalimentación por ciclo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONSULTORÍA POLÍTICA ================= -->
+  <section class="band deep" id="consultoria">
+    <div class="wrap">
+      <div class="stage reveal" style="margin-top:0">
+        <div>
+          <span class="eyebrow">Consultoría Política</span>
+          <h2 class="sec-title" style="margin-top:.7rem">La escuela de estrategia, <span class="accent">anclada a datos.</span></h2>
+          <p class="lead">No es una vertical de software: es la capa de servicio experto que orquesta la plataforma y garantiza que cada recomendación esté sustentada en territorio y evidencia, no en percepciones. Abre puerta a clientes que primero compran criterio y después tecnología, y eleva el valor de cada cuenta.</p>
+        </div>
+        <div class="stage-media"><div class="frame"><img src="img/equipo.jpg" alt="Equipo de consultoría política TERRAXIS" loading="lazy"></div></div>
+      </div>
+
+      <div class="serv">
+        <div class="reveal">Estrategia integral de campaña</div>
+        <div class="reveal">Diagnóstico territorial y de competitividad</div>
+        <div class="reveal">Narrativa y posicionamiento</div>
+        <div class="reveal">Plan de medios</div>
+        <div class="reveal">Profesionalización de la estructura</div>
+        <div class="reveal">Preparación de debates</div>
+        <div class="reveal">Gestión de crisis</div>
+        <div class="reveal">Investigación de opinión</div>
+        <div class="reveal">Auditoría estratégica</div>
+        <div class="reveal">Acompañamiento de jornada</div>
+        <div class="reveal">Defensa jurídica con abogado electoral</div>
+        <div class="reveal">Consultoría de gobierno · primeros 100 días</div>
+      </div>
+
+      <h3 class="sec-title reveal" style="font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:3rem">¿Cómo empezar?</h3>
+      <div class="steps">
+        <div class="step reveal"><h4>Agenda tu demo</h4><p>Te mostramos la plataforma y te entregamos un análisis del territorio de tu interés.</p></div>
+        <div class="step reveal"><h4>Diagnóstico y cotización a la medida</h4><p>Definimos alcance por solución y armamos una propuesta ajustada a tu proyecto.</p></div>
+        <div class="step reveal"><h4>Piloto y despliegue</h4><p>Arrancamos con un piloto, capacitamos a tu equipo y escalamos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section class="band" id="contacto">
     <div class="wrap contact-grid">
-      <div class="contact-side reveal">
+      <div class="reveal">
         <span class="eyebrow">Contacto</span>
         <h2 class="sec-title">Deja de operar a ciegas.</h2>
-        <p class="lead">Obtén la seguridad, eficiencia, orden, inteligencia y transparencia que tu campaña merece.</p>
+        <p class="lead">Obtén la seguridad, eficiencia, orden, inteligencia y transparencia que tu gobierno o campaña merece. Cuéntanos de tu proyecto y te entregamos un análisis inicial.</p>
         <div class="contact-links">
           <a href="mailto:contacto@terraxiselectoral.com"><b>Correo</b> contacto@terraxiselectoral.com</a>
           <span><b>WhatsApp</b> Próximamente</span>
           <span><b>Sitio</b> www.terraxiselectoral.com</span>
           <span><b>Ubicación</b> Monterrey, N.L. · México</span>
         </div>
-        <p class="note">WhatsApp por habilitar antes del lanzamiento.</p>
+        <a class="wa" href="mailto:contacto@terraxiselectoral.com">Escríbenos hoy</a>
       </div>
       <form class="form reveal" id="demoForm">
-        <div>
-          <label for="n">Nombre</label>
-          <input id="n" name="nombre" type="text" placeholder="Tu nombre" required>
+        <div><label for="n">Nombre</label><input id="n" name="nombre" type="text" placeholder="Tu nombre" required></div>
+        <div class="row">
+          <div><label for="org">Organización / tipo</label><input id="org" name="org" type="text" placeholder="Municipio, campaña, instituto…"></div>
+          <div><label for="e">Estado</label><input id="e" name="estado" type="text" placeholder="Ej. Nuevo León"></div>
         </div>
         <div class="row">
-          <div>
-            <label for="c">Cargo / tipo de elección</label>
-            <input id="c" name="cargo" type="text" placeholder="Ej. Presidencia municipal">
-          </div>
-          <div>
-            <label for="e">Estado</label>
-            <input id="e" name="estado" type="text" placeholder="Ej. Nuevo León">
-          </div>
+          <div><label for="w">WhatsApp</label><input id="w" name="whatsapp" type="tel" placeholder="+52 ..."></div>
+          <div><label for="m">Correo</label><input id="m" name="correo" type="email" placeholder="tucorreo@dominio.com" required></div>
         </div>
-        <div class="row">
-          <div>
-            <label for="w">WhatsApp</label>
-            <input id="w" name="whatsapp" type="tel" placeholder="+52 ...">
-          </div>
-          <div>
-            <label for="m">Correo</label>
-            <input id="m" name="correo" type="email" placeholder="tucorreo@dominio.com" required>
-          </div>
-        </div>
-        <div>
-          <label for="msg">Mensaje (opcional)</label>
-          <textarea id="msg" name="mensaje" rows="3" placeholder="Cuéntanos de tu elección"></textarea>
-        </div>
-        <button class="btn btn-primary" type="submit" style="justify-self:start">Solicita tu demo</button>
+        <div><label for="msg">Mensaje (opcional)</label><textarea id="msg" name="mensaje" rows="3" placeholder="Cuéntanos de tu proyecto"></textarea></div>
+        <button class="btn btn-primary" type="submit" style="justify-self:start">Solicitar demostración</button>
       </form>
     </div>
   </section>
 </main>
 
 <footer>
-  <a class="brand" href="#hero"><img src="img/logo.png" alt="TERRAXIS"></a>
+  <a class="brand" href="#inicio"><img src="img/logo.png" alt="TERRAXIS"></a>
   <span class="footnp">Plataforma no partidista de inteligencia territorial y electoral</span>
   <span>© <span id="yr"></span> TERRAXIS · Monterrey, N.L.</span>
 </footer>
 
+<script src="data/mx.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
 <script>
+  document.documentElement.classList.add('js');
   document.getElementById('yr').textContent = new Date().getFullYear();
-  // Stopgap sin backend: arma un correo a contacto@ con los datos y confirma en pantalla.
+  function killPre(){var p=document.getElementById('pre');if(p)p.classList.add('done');}
+
+  /* ---------- interactive Mexico map ---------- */
+  (function(){
+    var MX = window.__MX; var holder = document.getElementById('mapholder');
+    if(!MX || !holder){ return; }
+    var svgns='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(svgns,'svg');
+    svg.setAttribute('viewBox','0 0 '+MX.W+' '+MX.H);
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Mapa de México — cobertura territorial de TERRAXIS');
+    var norm=function(s){return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();};
+    var paths=[];
+    MX.states.forEach(function(s){
+      var p=document.createElementNS(svgns,'path');
+      p.setAttribute('d', s.d);
+      p.setAttribute('class','st'+(norm(s.n)==='nuevo leon'?' nl':''));
+      p.setAttribute('data-name', s.n);
+      svg.appendChild(p); paths.push(p);
+    });
+    // data pins at centroids
+    MX.states.forEach(function(s){
+      var c=document.createElementNS(svgns,'circle');
+      c.setAttribute('cx',s.c[0]); c.setAttribute('cy',s.c[1]);
+      c.setAttribute('r', norm(s.n)==='nuevo leon'?4.5:2.6);
+      c.setAttribute('class','pin'+(norm(s.n)==='nuevo leon'?' core':''));
+      c.style.animationDelay=(Math.random()*2.6).toFixed(2)+'s';
+      svg.appendChild(c);
+    });
+    holder.appendChild(svg);
+
+    // telemetry cycle (datos reales del plan)
+    var facts=['2027 · 17 gubernaturas','~500 diputaciones federales','2,000+ alcaldías','~170,000 casillas',
+      '2 verticales · 10 soluciones','Beachhead · Nuevo León','Fuentes públicas · INEGI · INE'];
+    var telemTxt=document.getElementById('telemTxt'); var fi=0, hovering=false;
+    function tick(){ if(!hovering){ telemTxt.textContent=facts[fi%facts.length]; fi++; } }
+    tick(); var telemTimer=setInterval(tick,2600);
+
+    // hover
+    paths.forEach(function(p){
+      p.addEventListener('mouseenter',function(){ hovering=true; telemTxt.textContent=p.getAttribute('data-name'); p.classList.add('hot'); });
+      p.addEventListener('mouseleave',function(){ hovering=false; if(!p.classList.contains('nl')) p.classList.remove('hot'); });
+    });
+
+    // staggered reveal of states
+    if(window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+      gsap.to(paths,{opacity:1,duration:.5,stagger:{each:.012,from:'random'},ease:'power1.out',delay:.2});
+    } else { paths.forEach(function(p){p.style.opacity=1;}); }
+  })();
+
+  /* ---------- GSAP + Lenis + reveals ---------- */
+  window.addEventListener('load', function(){
+    try{
+      var gsap=window.gsap, ST=window.ScrollTrigger, Lenis=window.Lenis;
+      if(gsap && ST) gsap.registerPlugin(ST);
+      if(Lenis){
+        var lenis=new Lenis({duration:1.1, easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));}, smoothWheel:true, prevent:function(){return false;}});
+        if(ST) lenis.on('scroll', ST.update);
+        gsap.ticker.add(function(t){lenis.raf(t*1000);}); gsap.ticker.lagSmoothing(0);
+        document.querySelectorAll('a[href^="#"]').forEach(function(a){
+          a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();lenis.scrollTo(t,{offset:0});closeMenu();}});
+        });
+      }
+      // reveals
+      if(gsap && ST){
+        gsap.utils.toArray('.reveal').forEach(function(el){
+          gsap.to(el,{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+        });
+      } else { document.documentElement.classList.remove('js'); }
+      gsap && gsap.to('#inicio .reveal',{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.07,delay:.15});
+    }catch(err){ console.error(err); document.documentElement.classList.remove('js'); }
+    killPre();
+  });
+  setTimeout(function(){ if(getComputedStyle(document.querySelector('.hero-h1')).opacity==='0'){document.documentElement.classList.remove('js');killPre();} },6000);
+
+  /* ---------- nav ---------- */
+  var nav=document.getElementById('nav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+  var menu=document.getElementById('menu'), toggle=document.getElementById('navToggle'), open=false;
+  function closeMenu(){open=false;menu.classList.remove('open');toggle.textContent='☰';}
+  toggle.addEventListener('click',function(){open=!open;menu.classList.toggle('open',open);toggle.textContent=open?'✕':'☰';});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+
+  /* ---------- form (stopgap mailto) ---------- */
   (function(){
     var f=document.getElementById('demoForm'); if(!f) return;
     f.addEventListener('submit',function(e){
       e.preventDefault();
       var g=function(n){var el=f.querySelector('[name="'+n+'"]');return el?el.value.trim():'';};
-      var body=encodeURIComponent(
-        'Nombre: '+g('nombre')+'\nCargo/elección: '+g('cargo')+'\nEstado: '+g('estado')+
-        '\nWhatsApp: '+g('whatsapp')+'\nCorreo: '+g('correo')+'\n\nMensaje:\n'+g('mensaje'));
+      var body=encodeURIComponent('Nombre: '+g('nombre')+'\nOrganización/tipo: '+g('org')+'\nEstado: '+g('estado')+'\nWhatsApp: '+g('whatsapp')+'\nCorreo: '+g('correo')+'\n\nMensaje:\n'+g('mensaje'));
       var subject=encodeURIComponent('Solicitud de demo — '+(g('nombre')||'sitio web'));
-      var btn=f.querySelector('button');
-      btn.textContent='Abriendo tu correo…'; btn.style.background='var(--teal-bright)';
+      var btn=f.querySelector('button'); btn.textContent='Abriendo tu correo…';
       window.location.href='mailto:contacto@terraxiselectoral.com?subject='+subject+'&body='+body;
       setTimeout(function(){btn.textContent='Solicitud lista ✓';},1500);
     });
   })();
-</script>
-
-<!-- Librerías vendorizadas en /vendor (sin dependencia de CDN en producción) -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "./vendor/three/three.module.js",
-    "three/addons/": "./vendor/three/addons/"
-  }
-}
-</script>
-<script src="vendor/gsap.min.js"></script>
-<script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis.min.js"></script>
-
-<script>
-  // Progressive enhancement: only hide reveals when JS is running.
-  document.documentElement.classList.add('js');
-  // Surface load errors instead of hanging the preloader; still reveal content.
-  function killPre(){const p=document.getElementById('pre');if(p)p.classList.add('done');}
-  window.addEventListener('error',(e)=>{console.error('[terraxis3d]',e.message);document.documentElement.classList.remove('js');setTimeout(killPre,300);});
-  // Safety net: if the module never revealed content within 7s, show it anyway.
-  setTimeout(()=>{const h=document.querySelector('.hero-h1');if(h&&getComputedStyle(h).opacity==='0'){document.documentElement.classList.remove('js');killPre();}},7000);
-</script>
-
-<script type="module">
-// GSAP / ScrollTrigger / Lenis se cargan como UMD (globales) desde /vendor.
-const gsap = window.gsap;
-const ScrollTrigger = window.ScrollTrigger;
-const Lenis = window.Lenis;
-gsap.registerPlugin(ScrollTrigger);
-
-/* ---------- Lenis smooth scroll + ScrollTrigger bridge ---------- */
-const lenis = new Lenis({ duration:1.15, easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true, prevent:()=>false });
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time)=>lenis.raf(time*1000));
-gsap.ticker.lagSmoothing(0);
-
-/* anchor links through Lenis */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',(e)=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();lenis.scrollTo(t,{offset:0});}
-  });
-});
-
-/* nav bg on scroll */
-const nav=document.getElementById('nav');
-ScrollTrigger.create({start:'top -60',onUpdate:(s)=>nav.classList.toggle('scrolled',s.progress>0||window.scrollY>60)});
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60),{passive:true});
-
-/* reveals — animate from a visible-safe resting state */
-gsap.utils.toArray('.reveal').forEach((el)=>{
-  gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',
-    scrollTrigger:{trigger:el,start:'top 88%',once:true}});
-});
-/* hero reveals fire immediately (above the fold) */
-gsap.to('#hero .reveal',{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.08,delay:.15});
-
-/* ---------- WebGL flyover ---------- */
-function detectWebGL(){try{const c=document.createElement('canvas');const gl=c.getContext('webgl2')||c.getContext('webgl');if(!gl)return false;const dbg=gl.getExtension('WEBGL_debug_renderer_info');const r=dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):'';return !/SwiftShader|Software|llvmpipe/i.test(r);}catch(e){return false;}}
-
-const preFill=document.querySelector('.pfill'), preNum=document.querySelector('.pnum');
-function finishPre(){let p=0;const iv=setInterval(()=>{p=Math.min(100,p+7);preFill.style.width=p+'%';preNum.textContent=p+'%';if(p>=100){clearInterval(iv);setTimeout(killPre,250);}},28);}
-
-if(!detectWebGL()){
-  document.body.classList.add('no-webgl');
-  finishPre();
-} else {
-  import('three').then((THREE)=>Promise.all([
-    THREE,
-    import('three/addons/postprocessing/EffectComposer.js'),
-    import('three/addons/postprocessing/RenderPass.js'),
-    import('three/addons/postprocessing/UnrealBloomPass.js'),
-    import('three/addons/postprocessing/ShaderPass.js'),
-    import('three/addons/postprocessing/OutputPass.js'),
-  ])).then(([THREE,{EffectComposer},{RenderPass},{UnrealBloomPass},{ShaderPass},{OutputPass}])=>{
-    buildScene(THREE,EffectComposer,RenderPass,UnrealBloomPass,ShaderPass,OutputPass);
-    finishPre();
-  }).catch((err)=>{console.error(err);document.body.classList.add('no-webgl');finishPre();});
-}
-
-function buildScene(THREE,EffectComposer,RenderPass,UnrealBloomPass,ShaderPass,OutputPass){
-  const BG=0x061318, TEAL=0x00BFA6;
-  const canvas=document.getElementById('webgl');
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance',stencil:false});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setSize(innerWidth,innerHeight);
-  renderer.outputColorSpace=THREE.SRGBColorSpace;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.05;
-
-  const scene=new THREE.Scene();
-  scene.background=new THREE.Color(BG);
-  scene.fog=new THREE.Fog(BG, 34, 118);
-
-  const camera=new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 260);
-  camera.position.set(0,15,34);
-
-  /* lighting */
-  const amb=new THREE.AmbientLight(0x22424a, 0.9); scene.add(amb);
-  const key=new THREE.DirectionalLight(0xbfeee6, 0.9); key.position.set(-8,18,10); scene.add(key);
-  const rim=new THREE.DirectionalLight(0x0a6d63, 0.7); rim.position.set(6,10,-14); scene.add(rim);
-
-  /* ---- territory: instanced buildings on a treadmill in Z ---- */
-  const COLS=18, ROWS=30, SP=5.2;
-  const COUNT=COLS*ROWS;
-  const totalDepth=ROWS*SP;
-  const frontLimit=26; // just behind the camera
-  const box=new THREE.BoxGeometry(1,1,1);
-  const mat=new THREE.MeshStandardMaterial({color:0x0c2229, roughness:.82, metalness:.15,
-    emissive:0x03171c, emissiveIntensity:.6});
-  const city=new THREE.InstancedMesh(box, mat, COUNT);
-  const dummy=new THREE.Object3D();
-  const bx=new Float32Array(COUNT), bz0=new Float32Array(COUNT), bh=new Float32Array(COUNT), bw=new Float32Array(COUNT);
-  let i=0;
-  for(let c=0;c<COLS;c++){
-    for(let r=0;r<ROWS;r++){
-      const gx=(c-(COLS-1)/2)*SP + (Math.random()-.5)*1.6;
-      const h=Math.pow(Math.random(),1.7)*11 + 1.2;
-      const w=1.9+Math.random()*1.7;
-      bx[i]=gx; bz0[i]=-r*SP; bh[i]=h; bw[i]=w; i++;
-    }
-  }
-  scene.add(city);
-
-  /* ---- pins + network ---- */
-  const NPINS=22;
-  const pinGroup=new THREE.Group(); scene.add(pinGroup);
-  const pinMat=new THREE.MeshBasicMaterial({color:0x9ff7ea});
-  const ringMat=new THREE.MeshBasicMaterial({color:TEAL});
-  const pins=[];
-  for(let p=0;p<NPINS;p++){
-    const g=new THREE.Group();
-    const head=new THREE.Mesh(new THREE.SphereGeometry(.55,18,18), pinMat.clone());
-    const ring=new THREE.Mesh(new THREE.TorusGeometry(.55,.16,12,26), ringMat.clone());
-    ring.rotation.x=Math.PI/2; ring.position.y=-.02;
-    const tail=new THREE.Mesh(new THREE.ConeGeometry(.34,.9,16), ringMat.clone());
-    tail.position.y=-.75; tail.rotation.x=Math.PI;
-    g.add(head,ring,tail);
-    const gx=(Math.random()-.5)*COLS*SP*0.82;
-    const gz0=-Math.random()*totalDepth;
-    g.userData={x:gx, z0:gz0, y:9+Math.random()*7, phase:Math.random()*6.28};
-    g.scale.setScalar(.9+Math.random()*.6);
-    pinGroup.add(g); pins.push(g);
-  }
-  /* lines: each pin to next 2 (stable topology, positions updated per frame) */
-  const segs=NPINS*2;
-  const linePos=new Float32Array(segs*2*3);
-  const lineGeo=new THREE.BufferGeometry();
-  lineGeo.setAttribute('position', new THREE.BufferAttribute(linePos,3));
-  const lineMat=new THREE.LineBasicMaterial({color:TEAL, transparent:true, opacity:.42});
-  const lines=new THREE.LineSegments(lineGeo, lineMat); scene.add(lines);
-
-  /* ---- post ---- */
-  const hdr=new THREE.WebGLRenderTarget(innerWidth,innerHeight,{type:THREE.HalfFloatType});
-  const composer=new EffectComposer(renderer,hdr);
-  composer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  composer.setSize(innerWidth,innerHeight);
-  composer.addPass(new RenderPass(scene,camera));
-  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight), 0.9, 0.6, 0.7);
-  composer.addPass(bloom);
-  const vign=new ShaderPass({uniforms:{tDiffuse:{value:null},uDark:{value:.62}},
-    vertexShader:'varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-    fragmentShader:'uniform sampler2D tDiffuse;uniform float uDark;varying vec2 v;void main(){vec4 c=texture2D(tDiffuse,v);float d=smoothstep(.85,.35,length(v-.5));gl_FragColor=vec4(mix(c.rgb*(1.-uDark),c.rgb,d),c.a);}'});
-  composer.addPass(vign);
-  composer.addPass(new OutputPass());
-  const grain=new ShaderPass({uniforms:{tDiffuse:{value:null},uT:{value:0},uI:{value:.045}},
-    vertexShader:'varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-    fragmentShader:'uniform sampler2D tDiffuse;uniform float uT;uniform float uI;varying vec2 v;float r(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}void main(){vec4 c=texture2D(tDiffuse,v);float n=r(v+uT)-.5;gl_FragColor=vec4(c.rgb+n*uI,c.a);}'});
-  composer.addPass(grain);
-
-  /* ---- state / scroll ---- */
-  const state={mx:{c:0,t:0,e:.05}, my:{c:0,t:0,e:.05}, camY:{c:15,t:15,e:.06}, dive:{c:0,t:0,e:.06}};
-  function damp(s,dt){s.c+=(s.t-s.c)*(1-Math.pow(1-s.e,dt*60));}
-  addEventListener('mousemove',(e)=>{state.mx.t=(e.clientX/innerWidth)*2-1;state.my.t=-((e.clientY/innerHeight)*2-1);},{passive:true});
-
-  /* hero scroll drives a gentle dive over the territory */
-  gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}})
-    .to(state.camY,{t:8,ease:'none'},0)
-    .to(state.dive,{t:1,ease:'none'},0);
-
-  const wrapZ=(z)=>{ let zz=((z % totalDepth)+totalDepth)%totalDepth; if(zz>frontLimit) zz-=totalDepth; return zz; };
-
-  let resizeP=false;
-  addEventListener('resize',()=>{if(resizeP)return;resizeP=true;requestAnimationFrame(()=>{
-    camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);
-    bloom.setSize(innerWidth,innerHeight);resizeP=false;});});
-
-  const clock=new THREE.Clock();
-  let running=true, raf=0;
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){running=false;cancelAnimationFrame(raf);}else if(!running){running=true;clock.getDelta();tick();}});
-
-  const SPEED=6.4; // units/sec flyover
-  function tick(){
-    if(!running)return;
-    const dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;
-    const travel=t*SPEED;
-    for(const k in state) damp(state[k],dt);
-
-    /* buildings */
-    for(let n=0;n<COUNT;n++){
-      const z=wrapZ(bz0[n]+travel);
-      dummy.position.set(bx[n], bh[n]/2, z);
-      dummy.scale.set(bw[n], bh[n], bw[n]);
-      dummy.rotation.set(0,0,0);
-      dummy.updateMatrix();
-      city.setMatrixAt(n,dummy.matrix);
-    }
-    city.instanceMatrix.needsUpdate=true;
-
-    /* pins */
-    for(let p=0;p<NPINS;p++){
-      const g=pins[p], u=g.userData;
-      const z=wrapZ(u.z0+travel);
-      g.position.set(u.x, u.y+Math.sin(t*1.1+u.phase)*.5, z);
-      const near=z>frontLimit-6?0:1;
-      g.visible = z < frontLimit-2;
-      g.children.forEach(ch=>{ if(ch.material){ch.material.opacity=1;} });
-    }
-    /* lines */
-    let li=0;
-    for(let p=0;p<NPINS;p++){
-      const a=pins[p];
-      for(let k=1;k<=2;k++){
-        const b=pins[(p+k)%NPINS];
-        linePos[li++]=a.position.x;linePos[li++]=a.position.y;linePos[li++]=a.position.z;
-        linePos[li++]=b.position.x;linePos[li++]=b.position.y;linePos[li++]=b.position.z;
-      }
-    }
-    lineGeo.attributes.position.needsUpdate=true;
-
-    /* camera */
-    camera.position.x=state.mx.c*3.2;
-    camera.position.y=state.camY.c+state.my.c*1.4;
-    camera.position.z=34;
-    camera.lookAt(state.mx.c*2.0, 3-state.dive.c*4, -24);
-
-    grain.uniforms.uT.value=t;
-    composer.render();
-    raf=requestAnimationFrame(tick);
-  }
-
-  /* intro fly-in */
-  gsap.from(camera.position,{z:70,y:40,duration:2.6,ease:'power3.out',onUpdate:()=>camera.updateProjectionMatrix()});
-  tick();
-}
 </script>
 </body>
 </html>
