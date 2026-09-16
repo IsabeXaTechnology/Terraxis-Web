@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Contacto · TERRAXIS</title>
+<meta name="description" content="Solicita tu cotización a la medida. Cuéntanos de tu elección o de tu gobierno y te entregamos un análisis inicial. TERRAXIS · Monterrey, N.L.">
+<link rel="icon" href="img/iso.png">
+<link rel="stylesheet" href="vendor/fonts.css">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3.5rem)}
+  @media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="brand" href="index.html"><img src="img/iso_white.png" alt="TERRAXIS"><span class="wm">TERRAXIS</span></a>
+  <nav class="nav-links" id="menu">
+    <a href="index.html">Inicio</a><a href="nosotros.html">Quiénes somos</a><a href="electoral.html">Electoral</a><a href="gobierno.html">Gobierno</a><a href="consultoria.html">Consultoría</a><a href="contacto.html">Contacto</a>
+  </nav>
+  <div class="nav-right"><a class="nav-cta" href="contacto.html">Solicita tu cotización a la medida</a><button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button></div>
+</header>
+
+<main>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow reveal">Contacto</span>
+      <h1 class="reveal">Deja de operar a ciegas.</h1>
+      <p class="lead reveal">Obtén la seguridad, eficiencia, orden, inteligencia y transparencia que tu gobierno o campaña merece. Cuéntanos de tu proyecto y te entregamos un análisis inicial + una cotización a la medida.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap contact-grid">
+      <div class="reveal">
+        <h2 class="sub-title">Hablemos.</h2>
+        <p class="lead">Software, ley y estrategia en un solo equipo. Atendemos elecciones municipales, estatales y federales, y gobiernos de cualquier orden —siempre de forma no partidista.</p>
+        <div class="contact-links">
+          <a href="mailto:contacto@terraxiselectoral.com"><b>Correo</b> contacto@terraxiselectoral.com</a>
+          <span><b>WhatsApp</b> Próximamente</span>
+          <span><b>Sitio</b> www.terraxiselectoral.com</span>
+          <span><b>Ubicación</b> Monterrey, N.L. · México</span>
+        </div>
+        <a class="wa" href="mailto:contacto@terraxiselectoral.com">Escríbenos hoy</a>
+        <p class="note">WhatsApp por habilitar antes del lanzamiento.</p>
+      </div>
+      <form class="form reveal" id="demoForm">
+        <div><label for="n">Nombre</label><input id="n" name="nombre" type="text" placeholder="Tu nombre" required></div>
+        <div class="row">
+          <div><label for="org">Organización / tipo</label><input id="org" name="org" type="text" placeholder="Municipio, campaña, instituto…"></div>
+          <div><label for="e">Estado</label><input id="e" name="estado" type="text" placeholder="Ej. Nuevo León"></div>
+        </div>
+        <div class="row">
+          <div><label for="w">WhatsApp</label><input id="w" name="whatsapp" type="tel" placeholder="+52 ..."></div>
+          <div><label for="m">Correo</label><input id="m" name="correo" type="email" placeholder="tucorreo@dominio.com" required></div>
+        </div>
+        <div><label for="msg">Mensaje (opcional)</label><textarea id="msg" name="mensaje" rows="4" placeholder="Cuéntanos de tu proyecto"></textarea></div>
+        <button class="btn btn-primary" type="submit" style="justify-self:start">Solicita tu cotización a la medida</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a class="brand" href="index.html"><img src="img/iso_white.png" alt="TERRAXIS"><span class="wm" style="font-size:1.2rem">TERRAXIS</span></a>
+  <div class="fnav"><a href="nosotros.html">Quiénes somos</a><a href="electoral.html">Electoral</a><a href="gobierno.html">Gobierno</a><a href="consultoria.html">Consultoría</a><a href="contacto.html">Contacto</a></div>
+  <span class="footnp">No partidista · Control total. Inteligencia real.</span>
+  <span>© <span id="yr"></span> TERRAXIS · Monterrey, N.L.</span>
+</footer>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
